@@ -27,45 +27,14 @@
       <div class="headroom-sticky home-page-menu">
         <div class="rq-header-location">
           <div class="container">
-            <p>Allow smartbuilder to acces your location: <button onclick="getLocation()">Allow</button>
+            <p>Your Location: <span>UET Mardan Campus
+                <?php
+
+                $geoinfo = geoip()->getLocation($_SERVER['REMOTE_ADDR']);
+
+                ?><span><?php echo $geoinfo->city; ?></span>
+              </span> <a href="#">Change location</a> </p>
           </div>
-
-
-
-
-          <p id="demo">Hello</p>
-
-          <script>
-            var x = document.getElementById("demo");
-
-            function getLocation() {
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-              } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-              }
-            }
-
-            function showPosition(position) {
-              x.innerHTML = "Latitude: " + position.coords.latitude +
-                "<br>Longitude: " + position.coords.longitude;
-              var lat = location.coords.latitude;
-              var lng = location.coords.longtidue;
-              var xhr = new XMLHttpRequest();
-              xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  var arr = JSON.parse(this.responseText);
-                  var data = arr.results[0].address_components;
-                  var loc = data[2].long_name;
-                  console.log(loc);
-                  x.innerHTML = loc;
-                }
-              }
-              xhr.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true");
-              xhr.send();
-            }
-          </script>
-
         </div>
         @include('header');
 
